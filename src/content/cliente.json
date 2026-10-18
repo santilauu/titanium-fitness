@@ -1,0 +1,191 @@
+{
+  "rubro": "Gimnasios",
+  "nombre": "Titanium Fitness - Gimnasio de Musculación Lanus",
+  "titulo": "Musculación en Lanús",
+  "bajada": "Plan mensual de ejercitación muscular en Salta 2260. Escribinos por WhatsApp y empezá.",
+  "cta": "Escribir por WhatsApp",
+  "etiquetaServicios": "Disciplinas y planes",
+  "servicios": [
+    {
+      "titulo": "Musculación mensual",
+      "texto": "Servicio mensual de ejercitación muscular.",
+      "slug": "musculacion-mensual"
+    }
+  ],
+  "horarios": "Lunes a viernes de 7 a 22 h; sábados de 8 a 18 h; domingos cerrado",
+  "direccion": "Salta 2260, B1824 Lanús, Provincia de Buenos Aires",
+  "telefono": "011 3368-4604",
+  "whatsapp": "541133684604",
+  "instagram": "titaniumfit.lanus",
+  "facebook": "",
+  "extras": [
+    {
+      "etiqueta": "Sobre nosotros",
+      "valor": "Familiar y muy bien ambientado"
+    }
+  ],
+  "precios": [
+    {
+      "item": "Plan mensual",
+      "monto": "$45.000"
+    }
+  ],
+  "equipo": "",
+  "faq": [],
+  "seo": {
+    "titulo": "Titanium Fitness - Gimnasio | Gimnasio en Lanus",
+    "descripcion": "Gimnasio en Lanus. Musculación mensual."
+  },
+  "siteUrl": "https://santilauu.github.io/titanium-fitness",
+  "media": {
+    "fotos": [
+      {
+        "src": "/media/stock/stock-1.webp",
+        "alt": "Imagen ilustrativa: IMG_2529",
+        "w": 1024,
+        "h": 768,
+        "ilustrativa": true,
+        "creador": "Neeta Lind",
+        "atribucion": "\"IMG_2529\" by Neeta Lind is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+        "origen": "https://www.flickr.com/photos/71132408@N00/2517026291",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "src": "/media/stock/stock-2.webp",
+        "alt": "Imagen ilustrativa: Sonja6",
+        "w": 882,
+        "h": 1023,
+        "ilustrativa": true,
+        "creador": "deanetr",
+        "atribucion": "\"Sonja6\" by deanetr is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+        "origen": "https://www.flickr.com/photos/26766130@N05/5311264767",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "src": "/media/stock/stock-3.webp",
+        "alt": "Imagen ilustrativa: Health Club",
+        "w": 1024,
+        "h": 1023,
+        "ilustrativa": true,
+        "creador": "Tobyotter",
+        "atribucion": "\"Health Club\" by Tobyotter is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+        "origen": "https://www.flickr.com/photos/78428166@N00/10763235814",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "src": "/media/stock/stock-4.webp",
+        "alt": "Imagen ilustrativa: MovieAD16",
+        "w": 1024,
+        "h": 723,
+        "ilustrativa": true,
+        "creador": "deanetr",
+        "atribucion": "\"MovieAD16\" by deanetr is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+        "origen": "https://www.flickr.com/photos/26766130@N05/5311302693",
+        "licencia": "CC BY 2.0"
+      }
+    ],
+    "videos": [],
+    "creditos": [
+      {
+        "creador": "Neeta Lind",
+        "origen": "https://www.flickr.com/photos/71132408@N00/2517026291",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "creador": "deanetr",
+        "origen": "https://www.flickr.com/photos/26766130@N05/5311264767",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "creador": "Tobyotter",
+        "origen": "https://www.flickr.com/photos/78428166@N00/10763235814",
+        "licencia": "CC BY 2.0"
+      },
+      {
+        "creador": "deanetr",
+        "origen": "https://www.flickr.com/photos/26766130@N05/5311302693",
+        "licencia": "CC BY 2.0"
+      }
+    ]
+  },
+  "demo": false,
+  "paginas": [],
+  "detalleServicios": false,
+  "adn": {
+    "estilo": "noir",
+    "par": "barlow-cond",
+    "hero": "columna",
+    "servicios": "bento",
+    "decor": "ninguno",
+    "animacion": "clip",
+    "marquee": true,
+    "datosAntes": false,
+    "orden": [
+      "galeria",
+      "servicios",
+      "datos"
+    ],
+    "datosLayout": "centrado",
+    "galeriaLayout": "tira",
+    "textos": {
+      "datos": "Cómo llegar",
+      "contacto": "Escribinos"
+    },
+    "matiz": 37,
+    "vars": {
+      "--bg": "#0c0c0b",
+      "--fg": "#f4f1ea",
+      "--muted": "#a8a39a",
+      "--accent": "#6fe33a",
+      "--accent-ink": "#0c0c0b",
+      "--surface": "#171615",
+      "--line": "#2e2c29",
+      "--radius": "2px",
+      "--shadow": "none",
+      "--h-case": "none",
+      "--h-track": "-0.03em",
+      "--h-weight": "800",
+      "--f-titulo": "\"Barlow Condensed\", system-ui, sans-serif",
+      "--f-texto": "\"Barlow\", system-ui, sans-serif"
+    },
+    "firma": "noir|syne-inter|columna|bento|ninguno|clip|1|galeria-servicios-datos|centrado|tira|acento",
+    "acentoPersonalizado": true
+  },
+  "horariosSemana": [
+    {
+      "dia": "Lunes",
+      "desde": 7,
+      "hasta": 22
+    },
+    {
+      "dia": "Martes",
+      "desde": 7,
+      "hasta": 22
+    },
+    {
+      "dia": "Miércoles",
+      "desde": 7,
+      "hasta": 22
+    },
+    {
+      "dia": "Jueves",
+      "desde": 7,
+      "hasta": 22
+    },
+    {
+      "dia": "Viernes",
+      "desde": 7,
+      "hasta": 22
+    },
+    {
+      "dia": "Sábado",
+      "desde": 8,
+      "hasta": 18
+    },
+    {
+      "dia": "Domingo",
+      "desde": null,
+      "hasta": null
+    }
+  ]
+}

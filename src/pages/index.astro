@@ -1,0 +1,252 @@
+---
+import Base from '../layouts/Base.astro';
+import cliente from '../content/cliente.json';
+import { whatsapp, instagram, mapa, creditos } from '../lib/sitio.js';
+import '../styles/titanio.css';
+
+const adn = cliente.adn;
+const wa = whatsapp(cliente);
+const ig = instagram(cliente);
+const maps = mapa(cliente);
+const fotos = (cliente.media?.fotos ?? []) as { src: string; alt: string; w: number; h: number }[];
+const semana = cliente.horariosSemana as { dia: string; desde: number | null; hasta: number | null }[];
+const dosDigitos = (n: number) => String(n).padStart(2, '0');
+// Datos reales para las cintas: nada inventado.
+const cinta = [
+  'Salta 2260, Lanús',
+  'Lunes a viernes 7 a 22 h',
+  'Sábados 8 a 18 h',
+  'Plan mensual $45.000',
+  `WhatsApp ${cliente.telefono}`,
+];
+const precio = cliente.precios?.[0];
+const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(cliente.direccion)}&output=embed`;
+const precioNum = Number(String(precio?.monto ?? '').replace(/\D/g, '')) || 0;
+const calle = cliente.direccion.split(',')[0];
+const resto = cliente.direccion.split(',').slice(1).join(',').trim();
+const flecha = 'M7 17 17 7M8 7h9v9';
+// Con GitHub Pages el sitio vive bajo /titanium-fitness: las rutas absolutas de las fotos llevan ese prefijo.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base adn={adn} titulo="Titanium Fitness | Gimnasio de musculación en Lanús" descripcion="Musculación mensual en Salta 2260, Lanús. Lunes a viernes de 7 a 22 h y sábados de 8 a 18 h. Escribinos por WhatsApp.">
+  <div class="progreso" aria-hidden="true"><i></i></div>
+
+  <nav class="lh lh-nav fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5" id="barra" aria-label="Principal">
+    <a href="#inicio" class="flex items-center gap-2" aria-label="Titanium Fitness, inicio">
+      <svg width="26" height="26" viewBox="0 0 256 256" fill="#ffffff" aria-hidden="true"><path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" /></svg>
+      <span class="text-white text-2xl font-playfair italic">Titanium</span>
+    </a>
+    <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1">
+      <a href="#horarios" class="nav-sec text-white/80 hover:bg-white/20 hover:text-white transition-colors px-4 py-1.5 rounded-full text-sm font-medium">Horarios</a>
+      <a href="#plan" class="nav-sec text-white/80 hover:bg-white/20 hover:text-white transition-colors px-4 py-1.5 rounded-full text-sm font-medium">Plan</a>
+      <a href="#galeria" class="nav-sec text-white/80 hover:bg-white/20 hover:text-white transition-colors px-4 py-1.5 rounded-full text-sm font-medium">Galería</a>
+      <a href="#llegar" class="nav-sec text-white/80 hover:bg-white/20 hover:text-white transition-colors px-4 py-1.5 rounded-full text-sm font-medium">Cómo llegar</a>
+    </div>
+    <a href={wa} class="hidden md:block bg-white text-gray-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-gray-100">Escribir</a>
+    <details class="menu-movil md:hidden">
+      <summary aria-label="Abrir menú"><span></span><span></span><span class="corta"></span></summary>
+      <div class="menu-panel">
+        <a href="#horarios">Horarios</a>
+        <a href="#plan">Plan</a>
+        <a href="#galeria">Galería</a>
+        <a href="#llegar">Cómo llegar</a>
+        <a class="boton" href={wa}>Escribir por WhatsApp</a>
+      </div>
+    </details>
+  </nav>
+
+  <main id="contenido">
+    <section class="lh lh-hero relative w-full overflow-hidden h-screen bg-black" id="inicio" aria-labelledby="titulo" style="height: 100dvh;">
+      <!-- Imagen base -->
+      <div class="lh-base absolute inset-0 bg-center bg-cover bg-no-repeat z-10 hero-zoom" aria-hidden="true"></div>
+      <div class="lh-velo absolute inset-0 z-20 pointer-events-none" aria-hidden="true"></div>
+      <!-- Segunda imagen: solo se ve dentro del reflector que sigue al cursor -->
+      <div class="lh-reveal absolute inset-0 bg-center bg-cover bg-no-repeat z-30 pointer-events-none" id="reflector" aria-hidden="true"></div>
+
+      <div class="absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none z-50">
+        <h1 id="titulo" class="text-white leading-[0.95]" aria-label="Fuerza que se construye. Titanium Fitness, gimnasio de musculación en Lanús">
+          <span class="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style="letter-spacing: -0.05em; animation-delay: 0.25s;" aria-hidden="true">Fuerza que</span>
+          <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style="letter-spacing: -0.08em; animation-delay: 0.42s;" aria-hidden="true">se construye</span>
+        </h1>
+      </div>
+
+      <div class="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] z-50 hero-anim hero-fade" style="animation-delay: 0.7s;">
+        <p class="text-sm text-white/80 leading-relaxed">Plan mensual de ejercitación muscular en Salta 2260, Lanús. Un gimnasio familiar y muy bien ambientado.</p>
+      </div>
+
+      <div class="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5 z-50 hero-anim hero-fade" style="animation-delay: 0.85s;">
+        <p class="text-xs sm:text-sm text-white/80 leading-relaxed">Lunes a viernes de 7 a 22 h y sábados de 8 a 18 h. Plan mensual de {precio?.monto}. Escribinos por WhatsApp y empezá.</p>
+        <a href={wa} class="lh-btn text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95">Escribir por WhatsApp</a>
+        <p class="estado" id="estado" role="status"><span class="punto" aria-hidden="true"></span><span id="estado-texto">Mirá los horarios más abajo</span></p>
+      </div>
+    </section>
+
+    <div class="lh lh-resto">
+
+    <!-- Datos reales en una franja de vidrio -->
+    <section class="px-5 sm:px-10 md:px-14 pt-10 pb-4" aria-label="Datos del gimnasio">
+      <ul class="lh-strip bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden p-0 m-0 list-none rev-blur">
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Dónde</p><p class="text-white text-base sm:text-lg font-medium">{calle}, Lanús</p></li>
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Horarios</p><p class="text-white text-base sm:text-lg font-medium">Lun a vie 7 a 22 h<br />Sáb 8 a 18 h</p></li>
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Plan mensual</p><p class="text-white text-base sm:text-lg font-medium">{precio?.monto}</p></li>
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">En Google Maps</p><p class="text-white text-base sm:text-lg font-medium"><span class="font-playfair italic text-2xl text-[var(--accent)]">4,9</span> · 64 reseñas</p></li>
+      </ul>
+    </section>
+
+    <!-- Horarios -->
+    <section class="px-5 sm:px-10 md:px-14 py-20 sm:py-28 grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)]" id="horarios" aria-labelledby="h-horarios">
+      <div class="lg:sticky lg:top-28 self-start">
+        <p class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-medium text-white/80 uppercase tracking-[0.18em] rev-blur">01 · Horarios</p>
+        <h2 id="h-horarios" class="text-white leading-[0.95] mt-5 rev-blur" style="animation-delay: .1s;">
+          <span class="block font-playfair italic font-normal text-4xl sm:text-6xl md:text-7xl" style="letter-spacing: -0.05em;">Cuando te</span>
+          <span class="block font-normal text-4xl sm:text-6xl md:text-7xl -mt-1" style="letter-spacing: -0.08em;">toque entrenar</span>
+        </h2>
+        <p class="text-sm text-white/70 leading-relaxed mt-5 max-w-[30ch] rev-blur">Hora de Argentina. Domingos cerrado.</p>
+        <p class="estado mt-5 rev-blur" id="estado-panel" role="status"></p>
+      </div>
+      <div class="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl p-4 sm:p-8 rev-blur">
+        <div class="escala" aria-hidden="true"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+        <ul class="semana">
+          {semana.map((d, i) => (
+            <li class="dia" style={`--i:${i}`} data-dia={(i + 1) % 7} data-desde={d.desde ?? ''} data-hasta={d.hasta ?? ''}>
+              <span class="dia-nombre">{d.dia}<span class="hoy" hidden> · hoy</span></span>
+              <span class="pista" aria-hidden="true">
+                {d.desde != null && <i class="franja" style={`--a:${(d.desde / 24) * 100}%;--w:${(((d.hasta as number) - d.desde) / 24) * 100}%`}></i>}
+                <i class="ahora" hidden></i>
+              </span>
+              <span class="dia-horas">{d.desde == null ? 'Cerrado' : <>{dosDigitos(d.desde)}<span class="guion">—</span>{dosDigitos(d.hasta as number)}</>}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Plan mensual -->
+    <section class="relative overflow-hidden px-5 sm:px-10 md:px-14 py-24 sm:py-32" id="plan" aria-labelledby="h-plan">
+      <div class="lh-plan-bg absolute inset-0" aria-hidden="true"></div>
+      <div class="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center">
+        <div>
+          <p class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-medium text-white/80 uppercase tracking-[0.18em] rev-blur">02 · Plan mensual</p>
+          <h2 id="h-plan" class="text-white leading-[0.95] mt-5 rev-blur">
+            <span class="block font-playfair italic font-normal text-4xl sm:text-6xl md:text-7xl" style="letter-spacing: -0.05em;">Un solo plan,</span>
+            <span class="block font-normal text-4xl sm:text-6xl md:text-7xl -mt-1" style="letter-spacing: -0.08em;">sin vueltas</span>
+          </h2>
+          <p class="text-sm sm:text-base text-white/80 leading-relaxed mt-5 max-w-[38ch] rev-blur">{cliente.servicios[0]?.texto}</p>
+        </div>
+        <div class="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl p-8 sm:p-12 rev-blur">
+          <p class="text-xs uppercase tracking-[0.18em] text-white/60">{precio?.item}</p>
+          <p class="font-playfair italic text-white leading-none mt-3 text-7xl sm:text-8xl md:text-9xl" style="letter-spacing: -0.05em;" aria-label={`${precio?.item}: ${precio?.monto} por mes`}>{precio?.monto}</p>
+          <p class="text-white/80 text-sm mt-3">por mes</p>
+          <p class="text-white/70 text-sm mt-6 border-t border-white/15 pt-6">[COMPLETAR: qué incluye el plan]</p>
+          <a href={wa} class="lh-btn mt-8 text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95">Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="px-5 sm:px-10 md:px-14 py-20 sm:py-28" id="galeria" aria-labelledby="h-galeria">
+      <p class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-medium text-white/80 uppercase tracking-[0.18em] rev-blur">03 · Galería</p>
+      <div class="flex flex-wrap items-end justify-between gap-6 mt-5 mb-10">
+        <h2 id="h-galeria" class="text-white leading-[0.95] rev-blur">
+          <span class="block font-playfair italic font-normal text-4xl sm:text-6xl md:text-7xl" style="letter-spacing: -0.05em;">Un lugar para</span>
+          <span class="block font-normal text-4xl sm:text-6xl md:text-7xl -mt-1" style="letter-spacing: -0.08em;">hacerte fuerte</span>
+        </h2>
+        <p class="text-sm text-white/70 leading-relaxed max-w-[34ch] rev-blur">Imágenes ilustrativas de otros gimnasios. [COMPLETAR: fotos reales de Titanium Fitness]</p>
+      </div>
+      <div class="columns-1 sm:columns-2 gap-4">
+        {fotos.map((f: any, i: number) => (
+          <figure class="lh-tile group rev-blur" style={`--r:${f.w / f.h};--i:${i}`}>
+            <img class="lh-tile-base" src={base + f.src} alt={f.alt} width={f.w} height={f.h} loading="lazy" decoding="async" />
+            <img class="lh-tile-color" src={base + f.src} alt="" aria-hidden="true" width={f.w} height={f.h} loading="lazy" decoding="async" />
+            <figcaption class="lh-tile-cap">
+              <span class="font-playfair italic text-white text-lg">{String(i + 1).padStart(2, '0')}</span>
+              <span class="text-white/80 text-xs">Imagen ilustrativa{f.creador ? ` · ${f.creador}` : ''}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- Cómo llegar -->
+    <section class="px-5 sm:px-10 md:px-14 py-20 sm:py-28 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]" id="llegar" aria-labelledby="h-llegar">
+      <div class="flex flex-col justify-between gap-10">
+        <div>
+          <p class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-medium text-white/80 uppercase tracking-[0.18em] rev-blur">04 · Cómo llegar</p>
+          <h2 id="h-llegar" class="text-white leading-[0.95] mt-5 rev-blur">
+            <span class="block font-playfair italic font-normal text-4xl sm:text-6xl md:text-7xl" style="letter-spacing: -0.05em;">Te esperamos en</span>
+            <span class="block font-normal text-4xl sm:text-6xl md:text-7xl -mt-1" style="letter-spacing: -0.08em;">{calle}</span>
+          </h2>
+          <p class="text-white/80 text-base mt-5 rev-blur">{resto}</p>
+          <p class="text-white/70 text-sm mt-2 rev-blur">Teléfono: {cliente.telefono}</p>
+        </div>
+        <div class="flex flex-wrap gap-3 rev-blur">
+          {maps && <a href={maps} class="lh-btn text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95">Abrir en Google Maps</a>}
+          <a href={wa} class="bg-white/10 backdrop-blur-md border border-white/30 text-white text-sm font-medium px-7 py-3 rounded-full hover:bg-white/20 transition-colors">WhatsApp</a>
+          {ig && <a href={ig} class="bg-white/10 backdrop-blur-md border border-white/30 text-white text-sm font-medium px-7 py-3 rounded-full hover:bg-white/20 transition-colors">Instagram</a>}
+        </div>
+      </div>
+      <div class="lh-mapa bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl overflow-hidden rev-blur">
+        <iframe title="Mapa de Titanium Fitness, {cliente.direccion}" src={mapaEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- Cierre -->
+    <section class="px-5 sm:px-10 md:px-14 pb-20" aria-label="Escribinos">
+      <div class="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl px-6 py-14 sm:px-14 sm:py-20 text-center rev-blur">
+        <h2 class="text-white leading-[0.95]">
+          <span class="block font-playfair italic font-normal text-4xl sm:text-6xl md:text-7xl" style="letter-spacing: -0.05em;">Empezá hoy,</span>
+          <span class="block font-normal text-4xl sm:text-6xl md:text-7xl -mt-1" style="letter-spacing: -0.08em;">escribinos</span>
+        </h2>
+        <p class="text-sm sm:text-base text-white/80 mt-5">Plan mensual de {precio?.monto} · {cliente.telefono}</p>
+        <a href={wa} class="lh-btn mt-8 text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95">Escribir por WhatsApp</a>
+      </div>
+    </section>
+
+    </div>
+
+  </main>
+
+  <footer class="lh lh-pie px-5 sm:px-10 md:px-14 pt-6 pb-10 overflow-hidden">
+    <p class="font-playfair italic text-white/10 leading-[0.85] select-none text-[24vw]" style="letter-spacing: -0.05em;" aria-hidden="true">Titanium</p>
+    <div class="flex flex-wrap items-start justify-between gap-6 border-t border-white/15 pt-6 text-sm text-white/70">
+      <p>© 2026 {cliente.nombre}</p>
+      <p>{cliente.direccion}</p>
+      <p>Lun a vie 7 a 22 h · Sáb 8 a 18 h</p>
+    </div>
+    {creditos(cliente).length > 0 && (
+      <p class="text-xs text-white/60 mt-4">Fotos ilustrativas: {creditos(cliente).map((c: any, i: number) => <>{i > 0 && ' · '}<a class="underline" href={c.origen}>{c.creador}</a> ({c.licencia})</>)}</p>
+    )}
+  </footer>
+
+  <script>
+    import '../scripts/reflector.js';
+    import '../scripts/titanio.js';
+  </script>
+
+  <script is:inline>
+    // Estado "abierto ahora" según los horarios publicados y marca de la hora actual en la línea del día.
+    (function () {
+      var ahora = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Argentina/Buenos_Aires' }));
+      var dia = ahora.getDay(), hora = ahora.getHours() + ahora.getMinutes() / 60;
+      var filas = document.querySelectorAll('.dia');
+      var estado = document.getElementById('estado'), texto = document.getElementById('estado-texto');
+      function horas(el) { var d = el.dataset.desde, h = el.dataset.hasta; return d === '' ? null : [Number(d), Number(h)]; }
+      var hoy = null;
+      filas.forEach(function (f) {
+        if (Number(f.dataset.dia) === dia) {
+          hoy = f; f.classList.add('es-hoy'); f.querySelector('.hoy').hidden = false;
+          var m = f.querySelector('.ahora'); m.style.left = (hora / 24 * 100) + '%'; m.hidden = false;
+        }
+      });
+      if (!hoy || !estado) return;
+      var rango = horas(hoy);
+      if (rango && hora >= rango[0] && hora < rango[1]) { estado.classList.add('abierto'); texto.textContent = 'Abierto ahora, hasta las ' + rango[1] + ' h'; return; }
+      var proximo = null;
+      for (var i = 0; i < 8 && !proximo; i++) {
+        var d = (dia + i) % 7, f = document.querySelector('.dia[data-dia="' + d + '"]'), r = f && horas(f);
+        if (r && ((i === 0 && hora < r[0]) || i > 0)) proximo = { i: i, desde: r[0] };
+      }
+      texto.textContent = 'Cerrado ahora' + (proximo ? ', abre ' + (proximo.i === 0 ? 'hoy' : proximo.i === 1 ? 'mañana' : 'el ' + document.querySelector('.dia[data-dia="' + ((dia + proximo.i) % 7) + '"] .dia-nombre').firstChild.textContent.toLowerCase()) + ' a las ' + proximo.desde + ' h' : '');
+    })();
+  </script>
+</Base>
