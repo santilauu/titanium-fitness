@@ -20,7 +20,19 @@ const estiloInline = Object.entries(adn.vars).map(([k, v]) => `${k}:${v}`).join(
     <meta property="og:description" content={descripcion} />
     <meta property="og:locale" content="es_AR" />
     <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      (function () {
+        var h = document.documentElement;
+        h.classList.add('js');
+        var sistema = false, pref = null;
+        try { sistema = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+        try { pref = localStorage.getItem('movimiento'); } catch (e) {}
+        h.classList.toggle('sistema-sin-mov', sistema);
+        // Con animaciones: por defecto sí, salvo que el sistema las pida apagadas y la persona no las haya encendido.
+        var con = pref === 'si' || (pref !== 'no' && !sistema);
+        if (con) { h.classList.add('mov'); setTimeout(function () { h.classList.add('listo'); }, 1300); }
+      })();
+    </script>
   </head>
   <body data-anim={adn.animacion}>
     <a class="skip" href="#contenido">Saltar al contenido</a>

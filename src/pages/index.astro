@@ -29,7 +29,14 @@ const flecha = 'M7 17 17 7M8 7h9v9';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base adn={adn} titulo="Titanium Fitness | Gimnasio de musculación en Lanús" descripcion="Musculación mensual en Salta 2260, Lanús. Lunes a viernes de 7 a 22 h y sábados de 8 a 18 h. Escribinos por WhatsApp.">
+  <div class="telon" aria-hidden="true">
+    <div class="telon-marca font-playfair">{[...'Titanium'].map((c, i) => <span style={`--k:${i}`}>{c}</span>)}</div>
+    <div class="telon-linea"></div>
+  </div>
+  <div class="fx" aria-hidden="true"><i class="fx-a"></i><i class="fx-b"></i><i class="fx-c"></i><div class="fx-grano"></div></div>
+  <div class="anillo" id="anillo" aria-hidden="true"></div>
   <div class="progreso" aria-hidden="true"><i></i></div>
+  <button type="button" class="mov-btn" id="mov-btn" aria-pressed="false"><span class="mov-punto" aria-hidden="true"></span><span id="mov-txt">Animaciones</span></button>
 
   <nav class="lh lh-nav fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5" id="barra" aria-label="Principal">
     <a href="#inicio" class="flex items-center gap-2" aria-label="Titanium Fitness, inicio">
@@ -65,8 +72,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <div class="absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none z-50">
         <h1 id="titulo" class="text-white leading-[0.95]" aria-label="Fuerza que se construye. Titanium Fitness, gimnasio de musculación en Lanús">
-          <span class="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style="letter-spacing: -0.05em; animation-delay: 0.25s;" aria-hidden="true">Fuerza que</span>
-          <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style="letter-spacing: -0.08em; animation-delay: 0.42s;" aria-hidden="true">se construye</span>
+          <span class="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style="letter-spacing: -0.05em; animation-delay: 0.25s;" aria-hidden="true">{[...'Fuerza que'].map((c, i) => <span class="ch" style={`--k:${i}`}>{c === ' ' ? '\u00a0' : c}</span>)}</span>
+          <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style="letter-spacing: -0.08em; animation-delay: 0.42s;" aria-hidden="true">{[...'se construye'].map((c, i) => <span class="ch" style={`--k:${i + 11}`}>{c === ' ' ? '\u00a0' : c}</span>)}</span>
         </h1>
       </div>
 
@@ -83,13 +90,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <div class="lh lh-resto">
 
+    <div class="cinta" aria-hidden="true"><div class="cinta-pista">{[0, 1].map(() => cinta.map((t) => <span>{t}</span>))}</div></div>
+
     <!-- Datos reales en una franja de vidrio -->
     <section class="px-5 sm:px-10 md:px-14 pt-10 pb-4" aria-label="Datos del gimnasio">
       <ul class="lh-strip bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden p-0 m-0 list-none rev-blur">
         <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Dónde</p><p class="text-white text-base sm:text-lg font-medium">{calle}, Lanús</p></li>
         <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Horarios</p><p class="text-white text-base sm:text-lg font-medium">Lun a vie 7 a 22 h<br />Sáb 8 a 18 h</p></li>
-        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Plan mensual</p><p class="text-white text-base sm:text-lg font-medium">{precio?.monto}</p></li>
-        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">En Google Maps</p><p class="text-white text-base sm:text-lg font-medium"><span class="font-playfair italic text-2xl text-[var(--accent)]">4,9</span> · 64 reseñas</p></li>
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">Plan mensual</p><p class="text-white text-base sm:text-lg font-medium"><span data-cuenta={precioNum} data-prefijo="$" data-miles="1">{precio?.monto}</span></p></li>
+        <li class="p-5 sm:p-6"><p class="text-xs uppercase tracking-[0.18em] text-white/60 mb-1">En Google Maps</p><p class="text-white text-base sm:text-lg font-medium"><span class="font-playfair italic text-2xl text-[var(--accent)]"><span data-cuenta="4.9" data-dec="1">4,9</span></span> · 64 reseñas</p></li>
       </ul>
     </section>
 
@@ -135,7 +144,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="bg-white/[0.06] backdrop-blur-md border border-white/15 rounded-3xl p-8 sm:p-12 rev-blur">
           <p class="text-xs uppercase tracking-[0.18em] text-white/60">{precio?.item}</p>
-          <p class="font-playfair italic text-white leading-none mt-3 text-7xl sm:text-8xl md:text-9xl" style="letter-spacing: -0.05em;" aria-label={`${precio?.item}: ${precio?.monto} por mes`}>{precio?.monto}</p>
+          <p class="font-playfair italic text-white leading-none mt-3 text-7xl sm:text-8xl md:text-9xl" style="letter-spacing: -0.05em;" aria-label={`${precio?.item}: ${precio?.monto} por mes`}><span data-cuenta={precioNum} data-prefijo="$" data-miles="1">{precio?.monto}</span></p>
           <p class="text-white/80 text-sm mt-3">por mes</p>
           <p class="text-white/70 text-sm mt-6 border-t border-white/15 pt-6">[COMPLETAR: qué incluye el plan]</p>
           <a href={wa} class="lh-btn mt-8 text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95">Consultar por WhatsApp</a>
@@ -155,7 +164,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
       <div class="columns-1 sm:columns-2 gap-4">
         {fotos.map((f: any, i: number) => (
-          <figure class="lh-tile group rev-blur" style={`--r:${f.w / f.h};--i:${i}`}>
+          <figure class="lh-tile group rev-blur" data-tilt style={`--r:${f.w / f.h};--i:${i}`}>
             <img class="lh-tile-base" src={base + f.src} alt={f.alt} width={f.w} height={f.h} loading="lazy" decoding="async" />
             <img class="lh-tile-color" src={base + f.src} alt="" aria-hidden="true" width={f.w} height={f.h} loading="lazy" decoding="async" />
             <figcaption class="lh-tile-cap">
